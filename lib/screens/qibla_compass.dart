@@ -107,9 +107,12 @@ class QiblahCompassWidget extends StatelessWidget {
           return CupertinoActivityIndicator();
 
         final qiblahDirection = snapshot.data;
-        var _angle = ((qiblahDirection.direction ?? 0) * (pi / 180) * -1);
+        var _angle = ((qiblahDirection.qiblah ?? 0) * (pi / 180) * -1);
         // print('offset ${qiblahDirection.offset.toStringAsFixed(3)}');
         // print(_angle);
+        // print(qiblahDirection.offset);
+
+        //TODO: Check if in range based on angle
 
         return Stack(
           alignment: Alignment.center,
@@ -119,19 +122,19 @@ class QiblahCompassWidget extends StatelessWidget {
               child: _compassSvg,
             ),
             Opacity(
-              opacity: .5,
+              opacity: .8,
               child: SpinKitPulse(
                 color: Colors.brown.shade200,
-                size: 9000,
+                size: 1000,
               ),
             ),
             Container(
               child: _needleSvg,
             ),
-            // Positioned(
-            //   bottom: 8,
-            //   child: Text("${qiblahDirection.offset.toStringAsFixed(3)}°"),
-            // )
+            Positioned(
+              bottom: 8,
+              child: Text("Align  arrow head"),
+            )
           ],
         );
       },

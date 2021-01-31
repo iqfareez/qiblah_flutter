@@ -19,6 +19,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.teal,
       ),
+      darkTheme: ThemeData.dark().copyWith(),
+      themeMode: ThemeMode.system,
       home: Scaffold(
         body: FutureBuilder(
           future: _deviceSupport,
