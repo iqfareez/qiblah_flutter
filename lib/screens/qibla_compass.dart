@@ -108,11 +108,8 @@ class QiblahCompassWidget extends StatelessWidget {
 
         final qiblahDirection = snapshot.data;
         var _angle = ((qiblahDirection.qiblah ?? 0) * (pi / 180) * -1);
-        // print('offset ${qiblahDirection.offset.toStringAsFixed(3)}');
-        // print(_angle);
-        // print(qiblahDirection.offset);
 
-        //TODO: Check if in range based on angle
+        if (_angle < 5 && _angle > -5) print('IN RANGE');
 
         return Stack(
           alignment: Alignment.center,
@@ -121,19 +118,15 @@ class QiblahCompassWidget extends StatelessWidget {
               angle: _angle,
               child: _compassSvg,
             ),
-            Opacity(
-              opacity: .8,
-              child: SpinKitPulse(
-                color: Colors.brown.shade200,
-                size: 1000,
-              ),
-            ),
             Container(
               child: _needleSvg,
             ),
-            Positioned(
-              bottom: 8,
-              child: Text("Align  arrow head"),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Text(
+                "Align both arrow head\nStay away from metal object.\nCalibrate the compass eveytime you use it.",
+                textAlign: TextAlign.center,
+              ),
             )
           ],
         );
