@@ -108,7 +108,7 @@ class QiblahCompassWidget extends StatelessWidget {
         final qiblahDirection = snapshot.data;
         var _angle = ((qiblahDirection.qiblah ?? 0) * (pi / 180) * -1);
 
-        if (_angle < 5 && _angle > -5) print('IN RANGE');
+        // if (_angle < 5 && _angle > -5) print('IN RANGE');
 
         return Stack(
           alignment: Alignment.center,
@@ -123,7 +123,7 @@ class QiblahCompassWidget extends StatelessWidget {
             Align(
               alignment: Alignment.bottomCenter,
               child: Text(
-                "Align both arrow head\nStay away from metal object.\nCalibrate the compass eveytime you use it.",
+                "Align both arrow head\nDo not put device close to metal object.\nCalibrate the compass eveytime you use it.",
                 textAlign: TextAlign.center,
               ),
             )

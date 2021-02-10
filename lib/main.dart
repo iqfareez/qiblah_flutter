@@ -1,8 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_qiblah/flutter_qiblah.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-
 import 'screens/qibla_compass.dart';
 
 void main() {
@@ -27,9 +25,12 @@ class MyApp extends StatelessWidget {
           future: _deviceSupport,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting)
-              return SpinKitCubeGrid(
-                duration: Duration(milliseconds: 670),
+              return Center(
+                child: CircularProgressIndicator(
+                  strokeWidth: 2,
+                ),
               );
+
             if (snapshot.hasError)
               return Center(
                 child: Text('Error: ${snapshot.error.toString()}'),
