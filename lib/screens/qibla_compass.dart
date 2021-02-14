@@ -3,6 +3,7 @@ import 'dart:math' show pi;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_qiblah/flutter_qiblah.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:geolocator/geolocator.dart';
 
 import 'location_error_widget.dart';
@@ -89,16 +90,11 @@ class _QiblaCompassState extends State<QiblaCompass> {
 }
 
 class QiblahCompassWidget extends StatelessWidget {
-  final _compassSvg = Image.asset('assets/compass.png');
-  final _needleSvg = Image.asset(
-    'assets/needle.png',
-    fit: BoxFit.contain,
-    height: 300,
-    alignment: Alignment.center,
-  );
+  final _kaabaSvg = SvgPicture.asset('assets/4.svg');
 
   @override
   Widget build(BuildContext context) {
+    var _platformBrightness = Theme.of(context).brightness;
     return StreamBuilder(
       stream: FlutterQiblah.qiblahStream,
       builder: (_, AsyncSnapshot<QiblahDirection> snapshot) {
@@ -115,11 +111,16 @@ class QiblahCompassWidget extends StatelessWidget {
           children: <Widget>[
             Transform.rotate(
               angle: _angle,
-              child: _compassSvg,
+              child: SvgPicture.asset('assets/5.svg', // compass
+                  color: _platformBrightness == Brightness.dark
+                      ? Colors.yellow
+                      : Colors.orange),
             ),
-            Container(
-              child: _needleSvg,
-            ),
+            _kaabaSvg,
+            SvgPicture.asset('assets/3.svg', //needle
+                color: _platformBrightness == Brightness.dark
+                    ? Colors.yellow
+                    : Colors.orange),
             Align(
               alignment: Alignment.bottomCenter,
               child: Text(
