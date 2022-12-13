@@ -47,3 +47,5 @@ app.*.map.json
 
 # signing key
 key.properties
+
+.fvm/flutter_sdk
