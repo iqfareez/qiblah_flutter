@@ -48,4 +48,6 @@ app.*.map.json
 # signing key
 key.properties
 
+# extra config
 .fvm/flutter_sdk
+.vscode

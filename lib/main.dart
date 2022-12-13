@@ -4,11 +4,11 @@ import 'screens/qibla_compass.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  final _deviceSupport = FlutterQiblah.androidDeviceSensorSupport();
+  const MyApp({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,25 +21,26 @@ class MyApp extends StatelessWidget {
       themeMode: ThemeMode.system,
       home: Scaffold(
         body: FutureBuilder(
-          future: _deviceSupport,
+          future: FlutterQiblah.androidDeviceSensorSupport(),
           builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting)
-              return Center(
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(
                 child: CircularProgressIndicator(
                   strokeWidth: 2,
                 ),
               );
+            }
 
-            if (snapshot.hasError)
+            if (snapshot.hasError) {
               return Center(
                 child: Text('Error: ${snapshot.error.toString()}'),
               );
-            if (snapshot.hasData)
-              return QiblaCompass();
-            else
-              return Container(
-                child: Text('Error'),
-              );
+            }
+            if (snapshot.hasData) {
+              return const QiblaCompass();
+            } else {
+              return const Text('Error');
+            }
           },
         ),
       ),

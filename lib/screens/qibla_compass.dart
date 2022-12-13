@@ -9,8 +9,10 @@ import 'package:geolocator/geolocator.dart';
 import 'location_error_widget.dart';
 
 class QiblaCompass extends StatefulWidget {
+  const QiblaCompass({Key key}) : super(key: key);
+
   @override
-  _QiblaCompassState createState() => _QiblaCompassState();
+  State<QiblaCompass> createState() => _QiblaCompassState();
 }
 
 class _QiblaCompassState extends State<QiblaCompass> {
@@ -33,8 +35,9 @@ class _QiblaCompassState extends State<QiblaCompass> {
       child: StreamBuilder(
         stream: stream,
         builder: (context, AsyncSnapshot<LocationStatus> snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting)
-            return CupertinoActivityIndicator();
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const CupertinoActivityIndicator();
+          }
           if (snapshot.data.enabled == true) {
             switch (snapshot.data.status) {
               case LocationPermission.always:
@@ -77,8 +80,9 @@ class _QiblaCompassState extends State<QiblaCompass> {
       await FlutterQiblah.requestPermissions();
       final s = await FlutterQiblah.checkLocationStatus();
       _locationStreamController.sink.add(s);
-    } else
+    } else {
       _locationStreamController.sink.add(locationStatus);
+    }
   }
 
   @override
@@ -92,17 +96,20 @@ class _QiblaCompassState extends State<QiblaCompass> {
 class QiblahCompassWidget extends StatelessWidget {
   final _kaabaSvg = SvgPicture.asset('assets/4.svg');
 
+  QiblahCompassWidget({Key key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    var _platformBrightness = Theme.of(context).brightness;
+    var platformBrightness = Theme.of(context).brightness;
     return StreamBuilder(
       stream: FlutterQiblah.qiblahStream,
       builder: (_, AsyncSnapshot<QiblahDirection> snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting)
-          return CupertinoActivityIndicator();
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const CupertinoActivityIndicator();
+        }
 
         final qiblahDirection = snapshot.data;
-        var _angle = ((qiblahDirection.qiblah ?? 0) * (pi / 180) * -1);
+        var angle = ((qiblahDirection.qiblah ?? 0) * (pi / 180) * -1);
 
         // if (_angle < 5 && _angle > -5) print('IN RANGE');
 
@@ -110,18 +117,18 @@ class QiblahCompassWidget extends StatelessWidget {
           alignment: Alignment.center,
           children: <Widget>[
             Transform.rotate(
-              angle: _angle,
+              angle: angle,
               child: SvgPicture.asset('assets/5.svg', // compass
-                  color: _platformBrightness == Brightness.dark
+                  color: platformBrightness == Brightness.dark
                       ? Colors.yellow
                       : Colors.orange),
             ),
             _kaabaSvg,
             SvgPicture.asset('assets/3.svg', //needle
-                color: _platformBrightness == Brightness.dark
+                color: platformBrightness == Brightness.dark
                     ? Colors.yellow
                     : Colors.orange),
-            Align(
+            const Align(
               alignment: Alignment.bottomCenter,
               child: Text(
                 "Align both arrow head\nDo not put device close to metal object.\nCalibrate the compass eveytime you use it.",
