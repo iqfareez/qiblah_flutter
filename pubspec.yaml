@@ -6,19 +6,24 @@ publish_to: "none"
 version: 1.0.3+4
 
 environment:
-  sdk: ">=2.7.0 <3.0.0"
+  sdk: '>=2.12.0 <3.0.0'
 
 dependencies:
   flutter:
     sdk: flutter
 
   cupertino_icons: ^1.0.1
-  flutter_qiblah: ^1.0.3+2
-  geolocator: ^6.1.14
-  flutter_svg: ^0.19.2+1
+  flutter_qiblah: ^2.1.0
+  geolocator: ^9.0.2
+  flutter_svg: ^1.1.6
 
 dev_dependencies:
   flutter_lints: ^2.0.1
+
+dependency_overrides:
+  # flutter compass in pub.dev is not updated
+  flutter_compass:
+    git: https://github.com/hemanthrajv/flutter_compass.git
 
 flutter:
   uses-material-design: true

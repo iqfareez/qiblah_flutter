@@ -9,7 +9,7 @@ import 'package:geolocator/geolocator.dart';
 import 'location_error_widget.dart';
 
 class QiblaCompass extends StatefulWidget {
-  const QiblaCompass({Key key}) : super(key: key);
+  const QiblaCompass({Key? key}) : super(key: key);
 
   @override
   State<QiblaCompass> createState() => _QiblaCompassState();
@@ -38,8 +38,8 @@ class _QiblaCompassState extends State<QiblaCompass> {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const CupertinoActivityIndicator();
           }
-          if (snapshot.data.enabled == true) {
-            switch (snapshot.data.status) {
+          if (snapshot.data!.enabled == true) {
+            switch (snapshot.data!.status) {
               case LocationPermission.always:
               case LocationPermission.whileInUse:
                 return QiblahCompassWidget();
@@ -96,7 +96,7 @@ class _QiblaCompassState extends State<QiblaCompass> {
 class QiblahCompassWidget extends StatelessWidget {
   final _kaabaSvg = SvgPicture.asset('assets/4.svg');
 
-  QiblahCompassWidget({Key key}) : super(key: key);
+  QiblahCompassWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -108,8 +108,8 @@ class QiblahCompassWidget extends StatelessWidget {
           return const CupertinoActivityIndicator();
         }
 
-        final qiblahDirection = snapshot.data;
-        var angle = ((qiblahDirection.qiblah ?? 0) * (pi / 180) * -1);
+        final qiblahDirection = snapshot.data!;
+        var angle = ((qiblahDirection.qiblah) * (pi / 180) * -1);
 
         // if (_angle < 5 && _angle > -5) print('IN RANGE');
 
