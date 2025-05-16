@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_qiblah/flutter_qiblah.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:shimmer/shimmer.dart';
 
 import 'location_error_widget.dart';
 
@@ -100,12 +101,49 @@ class QiblahCompassWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var platformBrightness = Theme.of(context).brightness;
     return StreamBuilder(
       stream: FlutterQiblah.qiblahStream,
       builder: (_, AsyncSnapshot<QiblahDirection> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const CupertinoActivityIndicator();
+          // Shimmer effect using the same Stack shape
+          return Shimmer.fromColors(
+            baseColor: Colors.grey.shade300,
+            highlightColor: Colors.grey.shade100,
+            child: Stack(
+              alignment: Alignment.center,
+              children: <Widget>[
+                SvgPicture.asset(
+                  'assets/5.svg',
+                  colorFilter: const ColorFilter.mode(
+                    Colors.white,
+                    BlendMode.srcIn,
+                  ),
+                ),
+                SvgPicture.asset(
+                  'assets/4.svg',
+                  colorFilter: const ColorFilter.mode(
+                    Colors.white,
+                    BlendMode.srcIn,
+                  ),
+                ),
+                SvgPicture.asset(
+                  'assets/3.svg',
+                  colorFilter: const ColorFilter.mode(
+                    Colors.white,
+                    BlendMode.srcIn,
+                  ),
+                ),
+                const Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Text(
+                    "Preparing compass...\nPlease wait...",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(color: Colors.white),
+                  ),
+                )
+              ],
+            ),
+          );
         }
 
         final qiblahDirection = snapshot.data!;
@@ -119,15 +157,17 @@ class QiblahCompassWidget extends StatelessWidget {
             Transform.rotate(
               angle: angle,
               child: SvgPicture.asset('assets/5.svg', // compass
-                  color: platformBrightness == Brightness.dark
-                      ? Colors.yellow
-                      : Colors.orange),
+                  colorFilter: ColorFilter.mode(
+                    Theme.of(context).colorScheme.primary,
+                    BlendMode.srcIn,
+                  )),
             ),
             _kaabaSvg,
             SvgPicture.asset('assets/3.svg', //needle
-                color: platformBrightness == Brightness.dark
-                    ? Colors.yellow
-                    : Colors.orange),
+                colorFilter: ColorFilter.mode(
+                  Theme.of(context).colorScheme.primary,
+                  BlendMode.srcIn,
+                )),
             const Align(
               alignment: Alignment.bottomCenter,
               child: Text(
