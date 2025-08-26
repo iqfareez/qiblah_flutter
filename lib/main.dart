@@ -47,25 +47,27 @@ class MyApp extends StatelessWidget {
           ),
           themeMode: ThemeMode.system,
           home: Scaffold(
-            body: FutureBuilder(
-              future: FlutterQiblah.androidDeviceSensorSupport(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(
-                    child: CircularProgressIndicator(
-                      strokeWidth: 2,
-                    ),
-                  );
-                }
+            body: SafeArea(
+              child: FutureBuilder(
+                future: FlutterQiblah.androidDeviceSensorSupport(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                      ),
+                    );
+                  }
 
-                if (snapshot.hasError) {
-                  return Center(
-                    child: Text('Error: ${snapshot.error.toString()}'),
-                  );
-                }
+                  if (snapshot.hasError) {
+                    return Center(
+                      child: Text('Error: ${snapshot.error.toString()}'),
+                    );
+                  }
 
-                return const QiblaCompass();
-              },
+                  return const QiblaCompass();
+                },
+              ),
             ),
           ),
         );
